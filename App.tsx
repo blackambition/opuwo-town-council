@@ -11,26 +11,25 @@ import DocumentRepository from './components/DocumentRepository';
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState('home');
 
-  // Dynamic Metadata for SEO Optimization
   useEffect(() => {
     const metaDescriptions: Record<string, string> = {
-      home: "Opuwo Town Council Home - Efficiency, Transparency, and Excellence in the Kunene region. Gateway to Himba culture and Epupa Falls.",
-      services: "Town Council Services - Apply for water, waste management, building permits and property rates in Opuwo.",
-      council: "The Council - Meet our leadership, including the Mayor and CEO of Opuwo Town Council.",
-      notices: "Public Notices - Stay updated with the latest announcements, tenders, and vacancies in Opuwo.",
-      contact: "Contact Opuwo Town Council - Location, telephone, and fault reporting for Opuwo residents.",
-      tourism: "Discover Opuwo - Tourism and Heritage hub. Explore Himba culture, Epupa Falls, and the beautiful Kunene landscapes.",
-      documents: "Document Repository - Download official municipal forms, building permits, and business registration documents for Opuwo."
+      home: "Opuwo Town Council - Professional municipal services for the Kunene region.",
+      services: "Access Town Council Services online - Water, waste, building and business permits.",
+      council: "Leadership & Governance - Meet the Council driving Opuwo's development.",
+      notices: "Public Bulletin - Official tenders, vacancies and announcements.",
+      contact: "Support Hub - Get in touch with our departments.",
+      tourism: "Visit Opuwo - Discover our rich heritage and natural wonders.",
+      documents: "Resources - Official forms and municipal documents."
     };
 
     const titles: Record<string, string> = {
       home: "Home | Opuwo Town Council",
-      services: "Town Council Services | Opuwo Town Council",
-      council: "Leadership & Council | Opuwo Town Council",
-      notices: "Public Notices & Updates | Opuwo Town Council",
-      contact: "Contact & Support | Opuwo Town Council",
-      tourism: "Tourism & Heritage | Opuwo Town Council",
-      documents: "Forms & Downloads | Opuwo Town Council"
+      services: "Services | Opuwo Town Council",
+      council: "Leadership | Opuwo Town Council",
+      notices: "Bulletin | Opuwo Town Council",
+      contact: "Contact | Opuwo Town Council",
+      tourism: "Tourism | Opuwo Town Council",
+      documents: "Library | Opuwo Town Council"
     };
 
     document.title = titles[currentPage] || "Opuwo Town Council";
@@ -39,7 +38,6 @@ const App: React.FC = () => {
       metaDescription.setAttribute('content', metaDescriptions[currentPage] || "Official municipal portal for Opuwo.");
     }
     
-    // Smooth scroll to top on "page" change
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);
 
@@ -47,85 +45,63 @@ const App: React.FC = () => {
     switch (currentPage) {
       case 'home':
         return (
-          <main id="main-content">
+          <main id="main-content" className="bg-slate-50">
             <Hero />
             
-            {/* Quick Link Utility Bar - Navigation Shortcuts for indexing */}
-            <nav aria-label="Quick Links" className="bg-slate-100 border-b border-slate-200">
-                <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {/* Cleaned up Quick Links */}
+            <section className="max-w-7xl mx-auto px-4 -mt-12 relative z-30 mb-20">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     {[
-                        { title: 'Pay Bills', icon: 'fa-credit-card' },
-                        { title: 'Fault Report', icon: 'fa-bullhorn' },
-                        { title: 'Tenders', icon: 'fa-file-signature' },
-                        { title: 'Downloads', icon: 'fa-file-arrow-down', page: 'documents' }
+                      { title: 'Pay Utilities', icon: 'fa-credit-card', color: 'bg-white', text: 'text-slate-900' },
+                      { title: 'Report a Fault', icon: 'fa-bullhorn', color: 'bg-white', text: 'text-slate-900' },
+                      { title: 'Public Tenders', icon: 'fa-file-signature', color: 'bg-white', text: 'text-slate-900' },
+                      { title: 'Download Forms', icon: 'fa-file-arrow-down', color: 'bg-blue-900', text: 'text-white', page: 'documents' }
                     ].map((item, i) => (
-                        <button 
-                          key={i} 
-                          onClick={() => item.page && setCurrentPage(item.page)}
-                          className="flex items-center space-x-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition border border-slate-200 group"
-                        >
-                            <div className="w-10 h-10 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition">
-                                <i className={`fa-solid ${item.icon}`} aria-hidden="true"></i>
-                            </div>
-                            <span className="font-bold text-slate-800">{item.title}</span>
-                        </button>
+                      <button 
+                        key={i}
+                        onClick={() => item.page && setCurrentPage(item.page)}
+                        className={`${item.color} ${item.text} p-8 rounded-2xl shadow-xl border border-slate-100 flex flex-col items-start transition-all hover:-translate-y-1 hover:shadow-2xl group`}
+                      >
+                        <div className={`w-12 h-12 ${item.color === 'bg-white' ? 'bg-blue-50 text-blue-700' : 'bg-white/10 text-amber-400'} rounded-xl flex items-center justify-center mb-6`}>
+                          <i className={`fa-solid ${item.icon} text-xl`}></i>
+                        </div>
+                        <span className="font-bold text-lg">{item.title}</span>
+                      </button>
                     ))}
                 </div>
-            </nav>
+            </section>
 
             <Services />
-
             <TourismHeritage />
-            
             <TownMap />
 
-            {/* News & Notices Preview */}
-            <section className="py-20 bg-slate-50 border-t border-slate-200">
+            {/* Professional News Feed */}
+            <section className="py-24 bg-white border-t border-slate-100">
                 <div className="max-w-7xl mx-auto px-4">
-                    <header className="flex justify-between items-end mb-12">
+                    <header className="flex justify-between items-end mb-16">
                         <div>
-                            <h2 className="text-3xl font-extrabold text-slate-900 section-heading">Public Notices</h2>
-                            <p className="text-slate-600">Latest updates from the Council chambers.</p>
+                            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Latest News & Updates</h2>
+                            <p className="text-slate-500 mt-2">Official announcements from the Council.</p>
                         </div>
-                        <button 
-                          onClick={() => setCurrentPage('notices')}
-                          className="text-blue-700 font-bold hover:underline hidden sm:block"
-                        >
-                          All Notices <i className="fa-solid fa-chevron-right ml-1"></i>
+                        <button onClick={() => setCurrentPage('notices')} className="text-blue-700 font-bold hover:underline">
+                          View All Notices
                         </button>
                     </header>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <article className="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200 flex flex-col md:flex-row">
-                            <div className="md:w-2/5">
-                                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb773b09?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" alt="Urban Water Project Meeting" />
-                            </div>
-                            <div className="md:w-3/5 p-8">
-                                <span className="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Announcement</span>
-                                <h3 className="text-xl font-bold mt-4 mb-4 text-slate-900 leading-tight">Public Consultation: Urban Water Sustainability Project 2024</h3>
-                                <p className="text-slate-600 text-sm mb-6 line-clamp-3">Join us for a community meeting at the Town Hall to discuss the new infrastructure improvements scheduled for the upcoming financial year...</p>
-                                <div className="flex items-center text-slate-400 text-xs mb-6">
-                                    <i className="fa-solid fa-calendar mr-2"></i> Oct 24, 2024
-                                </div>
-                                <button className="text-blue-700 font-bold text-sm hover:underline">Read Full Notice</button>
-                            </div>
-                        </article>
-
-                        <div className="space-y-4">
-                          {[
-                            { title: 'Refuse Collection: Public Holiday Schedule', cat: 'Services' },
-                            { title: 'Tender: Supply of Solar Street Lights', cat: 'Tenders' },
-                            { title: 'Notice of Property Assessment 2024', cat: 'Property' }
-                          ].map((item, idx) => (
-                            <div key={idx} className="bg-white p-6 rounded-xl border border-slate-200 flex justify-between items-center group cursor-pointer hover:border-blue-200 transition">
-                                <div>
-                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.cat}</span>
-                                    <h4 className="font-bold text-slate-800 mt-1">{item.title}</h4>
-                                </div>
-                                <i className="fa-solid fa-chevron-right text-slate-300 group-hover:text-blue-500 transition"></i>
-                            </div>
-                          ))}
-                        </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {[1, 2, 3].map((idx) => (
+                          <article key={idx} className="bg-white rounded-2xl border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow">
+                              <div className="aspect-video bg-slate-100 overflow-hidden">
+                                <img src={`https://picsum.photos/seed/news${idx}/800/450`} alt="News" className="w-full h-full object-cover" />
+                              </div>
+                              <div className="p-6">
+                                  <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">October 2024</span>
+                                  <h3 className="font-bold text-lg text-slate-900 mt-3 mb-4 leading-tight">Council Approves New Infrastructure Development Plan</h3>
+                                  <p className="text-slate-500 text-sm leading-relaxed mb-6">Detailed briefing on the upcoming residential expansion and water management upgrades...</p>
+                                  <button className="text-blue-700 font-bold text-sm hover:underline">Read Article</button>
+                              </div>
+                          </article>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -139,99 +115,108 @@ const App: React.FC = () => {
         return <DocumentRepository />;
       case 'council':
         return (
-          <main className="py-20 bg-white">
+          <main className="py-24 bg-slate-50 min-h-screen">
             <div className="max-w-7xl mx-auto px-4">
               <header className="mb-20 text-center">
-                  <h1 className="text-4xl font-extrabold text-slate-900 mb-6">The Council Leadership</h1>
-                  <p className="text-slate-600 max-w-2xl mx-auto text-lg">Our dedicated team working to build a prosperous and sustainable Opuwo.</p>
+                  <h1 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Council Leadership</h1>
+                  <p className="text-slate-500 max-w-2xl mx-auto">The team dedicated to the development and administration of Opuwo.</p>
               </header>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-                  <article className="text-center group">
-                      <div className="aspect-square rounded-2xl overflow-hidden mb-6 border-4 border-white shadow-lg">
-                          <img src="https://i.pravatar.cc/400?u=mayor" className="w-full h-full object-cover" alt="Mayor Rosa Mbambo" />
-                      </div>
-                      <h2 className="font-bold text-xl text-slate-900">Hon. Rosa Mbambo</h2>
-                      <p className="text-blue-700 font-semibold text-sm mt-1 uppercase tracking-wider">Mayor of Opuwo</p>
-                  </article>
-                  <article className="text-center group">
-                      <div className="aspect-square rounded-2xl overflow-hidden mb-6 border-4 border-white shadow-lg">
-                          <img src="https://i.pravatar.cc/400?u=clerk" className="w-full h-full object-cover" alt="CEO Johannes Shivute" />
-                      </div>
-                      <h2 className="font-bold text-xl text-slate-900">Johannes Shivute</h2>
-                      <p className="text-blue-700 font-semibold text-sm mt-1 uppercase tracking-wider">Chief Executive Officer</p>
-                  </article>
-              </div>
+
+              <section className="mb-24">
+                <h2 className="text-xl font-bold text-slate-900 mb-10 border-b border-slate-200 pb-4">Political Leadership</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {[
+                      { name: 'Hon. Rosa Mbambo', title: 'Mayor of Opuwo', img: 'mayor' },
+                      { name: 'Hon. Petrus Shifidi', title: 'Deputy Mayor', img: 'deputymayor' }
+                    ].map((person, i) => (
+                      <article key={i} className="bg-white rounded-2xl p-6 border border-slate-100 text-center shadow-sm">
+                          <div className="w-32 h-32 rounded-full overflow-hidden mx-auto mb-6 bg-slate-100">
+                              <img src={`https://i.pravatar.cc/300?u=${person.img}`} className="w-full h-full object-cover" alt={person.name} />
+                          </div>
+                          <h3 className="font-bold text-slate-900">{person.name}</h3>
+                          <p className="text-blue-600 text-xs font-bold uppercase tracking-widest mt-2">{person.title}</p>
+                      </article>
+                    ))}
+                </div>
+              </section>
+
+              {/* CEO Section */}
+              <section className="mb-24 bg-white rounded-3xl p-10 md:p-16 border border-slate-100 shadow-sm">
+                <div className="flex flex-col lg:flex-row items-center gap-12">
+                    <div className="w-48 h-48 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0">
+                        <img src="https://i.pravatar.cc/400?u=ceo" className="w-full h-full object-cover" alt="CEO" />
+                    </div>
+                    <div>
+                        <span className="text-blue-600 font-bold text-xs uppercase tracking-widest mb-2 block">Chief Executive Officer</span>
+                        <h2 className="text-3xl font-bold text-slate-900 mb-6 tracking-tight">Johannes Shivute</h2>
+                        <p className="text-slate-500 text-lg leading-relaxed italic max-w-2xl">
+                          "Leading our administration with a focus on sustainable growth and professional service delivery for every resident of Opuwo."
+                        </p>
+                    </div>
+                </div>
+              </section>
+
+              {/* Departments Grid */}
+              <section className="mb-24">
+                <h2 className="text-xl font-bold text-slate-900 mb-10 border-b border-slate-200 pb-4">Administrative Departments</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[
+                      { name: 'Maria Shikongo', dept: 'Planning & Properties', icon: 'fa-map-location-dot' },
+                      { name: 'Tjiuira Tjombumbi', dept: 'Technical Services', icon: 'fa-gears' },
+                      { name: 'Nghidipo Amukoto', dept: 'Public Health', icon: 'fa-leaf' },
+                      { name: 'David Tjiueza', dept: 'HR & Administration', icon: 'fa-users-gear' },
+                      { name: 'Selma Kamberipa', dept: 'Finance & IT', icon: 'fa-file-invoice-dollar' }
+                    ].map((member, i) => (
+                      <article key={i} className="bg-white rounded-2xl p-8 border border-slate-100 flex items-center space-x-6 hover:shadow-md transition-shadow">
+                          <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl flex-shrink-0">
+                            <i className={`fa-solid ${member.icon}`}></i>
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-slate-900">{member.name}</h4>
+                            <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-1">{member.dept}</p>
+                          </div>
+                      </article>
+                    ))}
+                </div>
+              </section>
             </div>
           </main>
         );
       case 'contact':
         return (
-          <main className="py-20 bg-white">
+          <main className="py-24 bg-white min-h-screen">
             <div className="max-w-7xl mx-auto px-4">
-              <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 flex flex-col lg:flex-row">
-                <div className="lg:w-1/3 p-12 bg-blue-900 text-white">
-                  <h1 className="text-3xl font-bold mb-8">Contact Our Office</h1>
+              <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden flex flex-col lg:flex-row shadow-sm">
+                <div className="lg:w-1/3 p-12 bg-slate-900 text-white">
+                  <h1 className="text-3xl font-bold mb-10">Contact Us</h1>
                   <div className="space-y-8">
                       <div className="flex items-start space-x-4">
-                          <i className="fa-solid fa-location-dot mt-1 text-amber-400" aria-hidden="true"></i>
+                          <i className="fa-solid fa-location-dot text-amber-500 mt-1"></i>
                           <div>
-                              <h2 className="font-bold text-sm uppercase tracking-wider">Physical Address</h2>
-                              <address className="text-blue-200 text-sm mt-1 not-italic">Main Office Building, Independence Ave, Opuwo, Namibia</address>
+                              <p className="font-bold text-sm uppercase tracking-widest opacity-60">Address</p>
+                              <address className="not-italic text-lg">Independence Ave, Opuwo</address>
                           </div>
                       </div>
                       <div className="flex items-start space-x-4">
-                          <i className="fa-solid fa-phone mt-1 text-amber-400" aria-hidden="true"></i>
+                          <i className="fa-solid fa-phone text-amber-500 mt-1"></i>
                           <div>
-                              <h2 className="font-bold text-sm uppercase tracking-wider">Telephone</h2>
-                              <p className="text-blue-200 text-sm mt-1">+264 65 273 000</p>
+                              <p className="font-bold text-sm uppercase tracking-widest opacity-60">Phone</p>
+                              <p className="text-lg">+264 65 273 000</p>
                           </div>
                       </div>
                   </div>
                 </div>
-                <div className="lg:w-2/3 p-12">
-                    <h2 className="text-2xl font-bold text-slate-900 mb-8">Service Feedback Form</h2>
+                <div className="lg:w-2/3 p-12 md:p-16">
+                    <h2 className="text-2xl font-bold text-slate-900 mb-8">Send a Message</h2>
                     <form className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-2">Full Name</label>
-                                <input type="text" required className="w-full px-4 py-3 border border-slate-200 rounded outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your name" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-2">Contact Number</label>
-                                <input type="tel" required className="w-full px-4 py-3 border border-slate-200 rounded outline-none focus:ring-2 focus:ring-blue-500" placeholder="+264" />
-                            </div>
+                            <input type="text" placeholder="Your Name" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 transition-colors" />
+                            <input type="tel" placeholder="Phone Number" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 transition-colors" />
                         </div>
-                        <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-2">Message</label>
-                            <textarea rows={5} required className="w-full px-4 py-3 border border-slate-200 rounded outline-none resize-none focus:ring-2 focus:ring-blue-500" placeholder="Provide details here..."></textarea>
-                        </div>
-                        <button type="submit" className="px-8 py-4 bg-blue-900 text-white font-bold rounded hover:bg-blue-800 transition shadow-lg">Submit Feedback</button>
+                        <textarea rows={5} placeholder="How can we assist you?" className="w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 transition-colors resize-none"></textarea>
+                        <button type="submit" className="bg-blue-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-blue-800 transition-all">Submit Feedback</button>
                     </form>
                 </div>
-              </div>
-            </div>
-          </main>
-        );
-      case 'notices':
-        return (
-          <main className="py-20 bg-slate-50">
-            <div className="max-w-5xl mx-auto px-4">
-              <header className="mb-12">
-                <h1 className="text-3xl font-extrabold text-slate-900 section-heading">Official Notices & Tenders</h1>
-                <p className="text-slate-600">Browse current announcements, public tenders, and job opportunities.</p>
-              </header>
-              <div className="space-y-6">
-                {[1, 2, 3, 4, 5].map(i => (
-                  <article key={i} className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
-                    <div className="flex justify-between items-start mb-4">
-                      <span className="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-1 rounded uppercase">Current Tender</span>
-                      <time className="text-slate-400 text-xs">Oct {10 + i}, 2024</time>
-                    </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-2">Notice of Procurement: Supply of Office Consumables for 2024/25</h2>
-                    <p className="text-slate-600 text-sm mb-4">The Opuwo Town Council invites registered entities to bid for the supply and delivery of various office materials...</p>
-                    <button className="text-blue-700 font-bold text-sm hover:underline">View Tender Document (PDF)</button>
-                  </article>
-                ))}
               </div>
             </div>
           </main>
@@ -242,7 +227,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-slate-50">
       <Navbar onNavigate={setCurrentPage} currentPage={currentPage} />
       
       <div className="flex-grow">
@@ -253,33 +238,33 @@ const App: React.FC = () => {
 
       <footer className="bg-slate-900 text-slate-400 py-20">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12 mb-16">
-            <div className="lg:col-span-2">
-              <div className="flex items-center text-white mb-8">
-                <img src="https://upload.wikimedia.org/wikipedia/en/2/2a/Opuwo_Town_Council_Logo.png" className="h-10 w-auto mr-4 bg-white p-1 rounded" alt="Opuwo Council Logo" />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div className="md:col-span-2">
+              <div className="flex items-center text-white mb-6">
+                <img src="https://upload.wikimedia.org/wikipedia/en/2/2a/Opuwo_Town_Council_Logo.png" className="h-10 w-auto mr-4 bg-white p-1 rounded" alt="Logo" />
                 <span className="font-bold text-xl uppercase tracking-tight">Opuwo Town Council</span>
               </div>
-              <p className="max-w-md leading-relaxed">
-                The administrative capital of the Kunene Region, dedicated to bringing quality municipal services to our residents through innovation and traditional values.
+              <p className="max-w-sm leading-relaxed text-sm">
+                Dedicated to providing quality municipal services and promoting sustainable development in the heart of the Kunene Region.
               </p>
             </div>
             <div>
-              <h4 className="text-white font-bold mb-8 uppercase text-xs tracking-widest">Connect</h4>
-              <div className="flex space-x-4">
-                <a href="#" aria-label="Facebook" className="w-10 h-10 rounded bg-slate-800 flex items-center justify-center hover:bg-blue-600 transition"><i className="fa-brands fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter" className="w-10 h-10 rounded bg-slate-800 flex items-center justify-center hover:bg-blue-400 transition"><i className="fa-brands fa-twitter"></i></a>
-              </div>
-            </div>
-            <div>
-              <h4 className="text-white font-bold mb-8 uppercase text-xs tracking-widest">Legal</h4>
-              <ul className="space-y-4 text-sm">
-                <li><a href="#" className="hover:text-white transition">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition">Public Disclosures</a></li>
-                <li><a href="#" className="hover:text-white transition">PAIA Manual</a></li>
+              <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Navigation</h4>
+              <ul className="space-y-3 text-sm">
+                <li><button onClick={() => setCurrentPage('services')} className="hover:text-amber-500">Services</button></li>
+                <li><button onClick={() => setCurrentPage('council')} className="hover:text-amber-500">The Council</button></li>
+                <li><button onClick={() => setCurrentPage('tourism')} className="hover:text-amber-500">Visit Opuwo</button></li>
               </ul>
             </div>
+            <div>
+              <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Connect</h4>
+              <div className="flex space-x-4">
+                <a href="#" className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-blue-600 transition"><i className="fa-brands fa-facebook-f"></i></a>
+                <a href="#" className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-blue-400 transition"><i className="fa-brands fa-twitter"></i></a>
+              </div>
+            </div>
           </div>
-          <div className="pt-10 border-t border-slate-800 flex flex-col md:flex-row justify-between text-[11px] font-bold uppercase tracking-widest">
+          <div className="pt-10 border-t border-white/5 text-[10px] font-bold uppercase tracking-widest flex flex-col md:flex-row justify-between opacity-40">
             <p>© 2024 Opuwo Town Council. All Rights Reserved.</p>
             <p className="mt-4 md:mt-0">Efficiency · Transparency · Excellence</p>
           </div>
