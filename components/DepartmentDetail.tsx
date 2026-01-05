@@ -13,6 +13,26 @@ interface DepartmentData {
 }
 
 const depts: Record<string, DepartmentData> = {
+  'dept-ceo': {
+    title: 'CEO Office',
+    head: 'Johannes Shivute',
+    headTitle: 'Chief Executive Officer',
+    icon: 'fa-user-tie',
+    color: 'blue',
+    description: 'The Office of the CEO is responsible for the overall strategic direction, leadership, and management of the Opuwo Town Council. It ensures that the Council\'s vision of transparency, efficiency, and excellence is translated into actionable policies and high-quality service delivery for all residents.',
+    functions: [
+      'Strategic planning and execution of Council resolutions',
+      'Economic development and investment promotion',
+      'Inter-governmental relations and regional coordination',
+      'Corporate governance and administrative oversight',
+      'Public relations and community engagement strategy'
+    ],
+    projects: [
+      'Vision 2030 Urban Development Masterplan',
+      'Digital Transformation & E-Governance Initiative',
+      'Opuwo Economic Growth Hub Partnership'
+    ]
+  },
   'dept-planning': {
     title: 'Planning and Properties Department',
     head: 'Maria Shikongo',

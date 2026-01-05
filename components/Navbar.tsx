@@ -9,9 +9,12 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeptOpen, setIsDeptOpen] = useState(false);
+  const [isHubOpen, setIsHubOpen] = useState(false);
   const [isMobileDeptOpen, setIsMobileDeptOpen] = useState(false);
+  const [isMobileHubOpen, setIsMobileHubOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const hubDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,6 +24,9 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDeptOpen(false);
+      }
+      if (hubDropdownRef.current && !hubDropdownRef.current.contains(event.target as Node)) {
+        setIsHubOpen(false);
       }
     };
 
@@ -34,6 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
 
   const navLinks = [
     { name: 'Home', id: 'home' },
+    { name: 'Opuwo', id: 'about-opuwo' },
     { name: 'Services', id: 'services' },
     { name: 'Bulletin', id: 'notices' },
     { name: 'Tenders', id: 'tenders' },
@@ -42,11 +49,17 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
   ];
 
   const departments = [
+    { name: 'CEO Office', id: 'dept-ceo' },
     { name: 'Planning and Properties', id: 'dept-planning' },
     { name: 'Technical Services', id: 'dept-technical' },
     { name: 'Public Health and Environmental Management', id: 'dept-health' },
     { name: 'HR and Administration', id: 'dept-hr' },
     { name: 'Finance, IT and Fixed Asset', id: 'dept-finance' },
+  ];
+
+  const hubs = [
+    { name: 'Trade Fair', id: 'trade-fair' },
+    { name: 'Open Market', id: 'open-market' },
   ];
 
   return (
@@ -92,7 +105,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
                   currentPage.startsWith('dept-') ? 'text-blue-700 bg-blue-50' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
-                Departments
+                Depts
                 <i className={`fa-solid fa-chevron-down text-[8px] transition-transform ${isDeptOpen ? 'rotate-180' : ''}`}></i>
               </button>
               
@@ -109,6 +122,36 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
                     }`}
                   >
                     {dept.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Economic Hubs Dropdown */}
+            <div className="relative" ref={hubDropdownRef}>
+              <button
+                onClick={() => setIsHubOpen(!isHubOpen)}
+                className={`px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] transition-all rounded-xl flex items-center gap-2 ${
+                  ['trade-fair', 'open-market'].includes(currentPage) ? 'text-blue-700 bg-blue-50' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                }`}
+              >
+                Hubs
+                <i className={`fa-solid fa-chevron-down text-[8px] transition-transform ${isHubOpen ? 'rotate-180' : ''}`}></i>
+              </button>
+              
+              <div className={`absolute top-full left-0 mt-3 w-56 bg-white border border-slate-100 rounded-2xl shadow-2xl py-3 transition-all duration-200 origin-top-left ${isHubOpen ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-2 invisible'}`}>
+                {hubs.map((hub) => (
+                  <button
+                    key={hub.id}
+                    onClick={() => {
+                      onNavigate(hub.id);
+                      setIsHubOpen(false);
+                    }}
+                    className={`w-full text-left px-5 py-3 text-[10px] font-black uppercase tracking-widest transition-colors ${
+                      currentPage === hub.id ? 'text-blue-700 bg-blue-50' : 'text-slate-600 hover:text-blue-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    {hub.name}
                   </button>
                 ))}
               </div>
@@ -137,7 +180,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
               onClick={() => onNavigate('contact')}
               className="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-900 transition-all shadow-lg hover:shadow-blue-900/20"
             >
-              Support Center
+              Support
             </button>
           </div>
 
@@ -180,6 +223,34 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate, currentPage }) => {
                     }`}
                   >
                     {dept.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Hubs Accordion */}
+            <div className="px-6 py-2">
+              <button 
+                onClick={() => setIsMobileHubOpen(!isMobileHubOpen)}
+                className="w-full flex items-center justify-between text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2"
+              >
+                Hubs
+                <i className={`fa-solid fa-chevron-down text-[8px] transition-transform ${isMobileHubOpen ? 'rotate-180' : ''}`}></i>
+              </button>
+              
+              <div className={`mt-2 space-y-1 transition-all duration-300 ${isMobileHubOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                {hubs.map((hub) => (
+                  <button
+                    key={hub.id}
+                    onClick={() => {
+                      onNavigate(hub.id);
+                      setIsOpen(false);
+                    }}
+                    className={`block w-full text-left px-4 py-3 rounded-xl text-sm font-bold ${
+                      currentPage === hub.id ? 'text-blue-700 bg-blue-50' : 'text-slate-500 hover:text-slate-900'
+                    }`}
+                  >
+                    {hub.name}
                   </button>
                 ))}
               </div>

@@ -12,6 +12,9 @@ import PropertyPortal from './components/PropertyPortal';
 import Bulletin from './components/Bulletin';
 import Tenders from './components/Tenders';
 import DepartmentDetail from './components/DepartmentDetail';
+import AboutOpuwo from './components/AboutOpuwo';
+import TradeFair from './components/TradeFair';
+import OpenMarket from './components/OpenMarket';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState('home');
@@ -19,6 +22,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const metaDescriptions: Record<string, string> = {
       home: "Opuwo Town Council - Professional municipal services for the Kunene region.",
+      'about-opuwo': "About Opuwo - Discover the history, culture, and economic potential of Kunene's capital.",
       services: "Access Town Council Services online - Water, waste, building and business permits.",
       council: "Leadership & Governance - Meet the Council driving Opuwo's development.",
       notices: "Public Bulletin - Official news announcements.",
@@ -28,6 +32,9 @@ const App: React.FC = () => {
       tenders: "Public Tenders - View active bidding opportunities and procurement documents.",
       'water-utilities': "Manage your water account and utility services in Opuwo.",
       'land-property': "Opuwo Property Portal - Land ownership, vacant erven listings, and plot sizes.",
+      'trade-fair': "Opuwo Annual Trade Fair - Kunene's premier economic and cultural exhibition.",
+      'open-market': "Opuwo Open Market - The community heart of trade and fresh produce in Opuwo.",
+      'dept-ceo': "Office of the CEO - Strategic leadership and management for Opuwo Town Council.",
       'dept-planning': "Planning and Properties Department - Opuwo Town Council urban development.",
       'dept-technical': "Technical Services Department - Infrastructure and water management in Opuwo.",
       'dept-health': "Public Health and Environmental Management - Keeping Opuwo healthy and clean.",
@@ -37,6 +44,7 @@ const App: React.FC = () => {
 
     const titles: Record<string, string> = {
       home: "Home | Opuwo Town Council",
+      'about-opuwo': "About Opuwo | Opuwo Town Council",
       services: "Services | Opuwo Town Council",
       council: "Leadership | Opuwo Town Council",
       notices: "Bulletin | Opuwo Town Council",
@@ -46,6 +54,9 @@ const App: React.FC = () => {
       tenders: "Tenders | Opuwo Town Council",
       'water-utilities': "Water Portal | Opuwo Town Council",
       'land-property': "Property Portal | Opuwo Town Council",
+      'trade-fair': "Trade Fair | Opuwo Town Council",
+      'open-market': "Open Market | Opuwo Town Council",
+      'dept-ceo': "CEO Office | Opuwo Town Council",
       'dept-planning': "Planning Dept | Opuwo Town Council",
       'dept-technical': "Technical Dept | Opuwo Town Council",
       'dept-health': "Health Dept | Opuwo Town Council",
@@ -101,6 +112,12 @@ const App: React.FC = () => {
             <TownMap />
           </main>
         );
+      case 'about-opuwo':
+        return <AboutOpuwo />;
+      case 'trade-fair':
+        return <TradeFair />;
+      case 'open-market':
+        return <OpenMarket />;
       case 'services':
         return <Services onNavigate={setCurrentPage} />;
       case 'tourism':
@@ -163,6 +180,7 @@ const App: React.FC = () => {
                 <h2 className="text-xl font-bold text-slate-900 mb-10 border-b border-slate-200 pb-4">Administrative Departments</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {[
+                      { name: 'Johannes Shivute', dept: 'CEO Office', icon: 'fa-user-tie', id: 'dept-ceo' },
                       { name: 'Maria Shikongo', dept: 'Planning & Properties', icon: 'fa-map-location-dot', id: 'dept-planning' },
                       { name: 'Tjiuira Tjombumbi', dept: 'Technical Services', icon: 'fa-gears', id: 'dept-technical' },
                       { name: 'Nghidipo Amukoto', dept: 'Public Health', icon: 'fa-leaf', id: 'dept-health' },
