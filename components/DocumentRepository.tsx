@@ -48,9 +48,9 @@ const DocumentRepository: React.FC = () => {
     <section className="py-20 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="mb-12">
-          <h1 className="text-4xl font-extrabold text-slate-900 section-heading">Digital Document Repository</h1>
+          <h1 className="text-4xl font-extrabold text-slate-900 section-heading text-left">Digital Document Repository</h1>
           <p className="text-slate-600 max-w-2xl text-lg">
-            Download official municipal forms, permits, and application documents. All files are provided in high-quality PDF format for printing or digital submission.
+            Download official municipal forms and application permits. All files are provided in high-quality PDF format for printing or digital submission.
           </p>
         </header>
 
@@ -61,14 +61,14 @@ const DocumentRepository: React.FC = () => {
           </div>
           <input 
             type="text" 
-            placeholder="Search for forms (e.g., 'water', 'permit')..."
+            placeholder="Search for forms..."
             className="w-full pl-11 pr-4 py-4 bg-white border border-slate-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-blue-500 outline-none transition"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
           {filteredCategories.map((category) => (
             <div key={category.id} className="space-y-6">
               <div className="flex items-center space-x-3 mb-6">
@@ -78,7 +78,7 @@ const DocumentRepository: React.FC = () => {
                 <h2 className="text-xl font-bold text-slate-800">{category.name}</h2>
               </div>
 
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-4">
                 {category.documents.map((doc, idx) => (
                   <div 
                     key={idx} 
@@ -114,7 +114,7 @@ const DocumentRepository: React.FC = () => {
               <i className="fa-solid fa-file-circle-xmark"></i>
             </div>
             <h3 className="text-xl font-bold text-slate-800">No documents found</h3>
-            <p className="text-slate-500">Try adjusting your search criteria or contact the council for assistance.</p>
+            <p className="text-slate-500">Try adjusting your search criteria or contact the main office for assistance.</p>
           </div>
         )}
 
@@ -126,7 +126,7 @@ const DocumentRepository: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold text-blue-900 mb-2">Submission Guidelines</h4>
             <p className="text-blue-700 text-sm leading-relaxed max-w-3xl">
-              Completed forms can be submitted in person at our Independence Avenue offices or scanned and emailed to <span className="font-bold">applications@opuwo.town</span>. Please ensure all required supporting documents (ID, Title Deeds, etc.) are attached to your application.
+              Completed forms can be submitted in person at our Independence Avenue offices. Digital queries can be sent to <span className="font-bold">info@opuwo.town</span>.
             </p>
           </div>
         </div>

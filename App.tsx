@@ -7,6 +7,11 @@ import ChatAssistant from './components/ChatAssistant';
 import TownMap from './components/TownMap';
 import TourismHeritage from './components/TourismHeritage';
 import DocumentRepository from './components/DocumentRepository';
+import WaterUtilities from './components/WaterUtilities';
+import PropertyPortal from './components/PropertyPortal';
+import Bulletin from './components/Bulletin';
+import Tenders from './components/Tenders';
+import DepartmentDetail from './components/DepartmentDetail';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState('home');
@@ -16,10 +21,18 @@ const App: React.FC = () => {
       home: "Opuwo Town Council - Professional municipal services for the Kunene region.",
       services: "Access Town Council Services online - Water, waste, building and business permits.",
       council: "Leadership & Governance - Meet the Council driving Opuwo's development.",
-      notices: "Public Bulletin - Official tenders, vacancies and announcements.",
+      notices: "Public Bulletin - Official news announcements.",
       contact: "Support Hub - Get in touch with our departments.",
       tourism: "Visit Opuwo - Discover our rich heritage and natural wonders.",
-      documents: "Resources - Official forms and municipal documents."
+      documents: "Resources - Official forms and municipal documents.",
+      tenders: "Public Tenders - View active bidding opportunities and procurement documents.",
+      'water-utilities': "Manage your water account and utility services in Opuwo.",
+      'land-property': "Opuwo Property Portal - Land ownership, vacant erven listings, and plot sizes.",
+      'dept-planning': "Planning and Properties Department - Opuwo Town Council urban development.",
+      'dept-technical': "Technical Services Department - Infrastructure and water management in Opuwo.",
+      'dept-health': "Public Health and Environmental Management - Keeping Opuwo healthy and clean.",
+      'dept-hr': "HR and Administration - Corporate services and human capital at Opuwo Town Council.",
+      'dept-finance': "Finance, IT and Fixed Asset - Financial management and digital infrastructure."
     };
 
     const titles: Record<string, string> = {
@@ -29,7 +42,15 @@ const App: React.FC = () => {
       notices: "Bulletin | Opuwo Town Council",
       contact: "Contact | Opuwo Town Council",
       tourism: "Tourism | Opuwo Town Council",
-      documents: "Library | Opuwo Town Council"
+      documents: "Library | Opuwo Town Council",
+      tenders: "Tenders | Opuwo Town Council",
+      'water-utilities': "Water Portal | Opuwo Town Council",
+      'land-property': "Property Portal | Opuwo Town Council",
+      'dept-planning': "Planning Dept | Opuwo Town Council",
+      'dept-technical': "Technical Dept | Opuwo Town Council",
+      'dept-health': "Health Dept | Opuwo Town Council",
+      'dept-hr': "HR Dept | Opuwo Town Council",
+      'dept-finance': "Finance Dept | Opuwo Town Council"
     };
 
     document.title = titles[currentPage] || "Opuwo Town Council";
@@ -42,77 +63,58 @@ const App: React.FC = () => {
   }, [currentPage]);
 
   const renderPage = () => {
+    if (currentPage.startsWith('dept-')) {
+      return <DepartmentDetail deptId={currentPage} />;
+    }
+
     switch (currentPage) {
       case 'home':
         return (
           <main id="main-content" className="bg-slate-50">
             <Hero />
             
-            {/* Cleaned up Quick Links */}
+            {/* Quick Links */}
             <section className="max-w-7xl mx-auto px-4 -mt-12 relative z-30 mb-20">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {[
-                      { title: 'Pay Utilities', icon: 'fa-credit-card', color: 'bg-white', text: 'text-slate-900' },
-                      { title: 'Report a Fault', icon: 'fa-bullhorn', color: 'bg-white', text: 'text-slate-900' },
-                      { title: 'Public Tenders', icon: 'fa-file-signature', color: 'bg-white', text: 'text-slate-900' },
-                      { title: 'Download Forms', icon: 'fa-file-arrow-down', color: 'bg-blue-900', text: 'text-white', page: 'documents' }
+                      { title: 'Pay Utilities', icon: 'fa-credit-card', color: 'bg-white', text: 'text-slate-900', page: 'water-utilities' },
+                      { title: 'Property Search', icon: 'fa-house-circle-check', color: 'bg-white', text: 'text-slate-900', page: 'land-property' },
+                      { title: 'Public Tenders', icon: 'fa-file-signature', color: 'bg-white', text: 'text-slate-900', page: 'tenders' },
+                      { title: 'News & Notices', icon: 'fa-bullhorn', color: 'bg-blue-900', text: 'text-white', page: 'notices' }
                     ].map((item, i) => (
                       <button 
                         key={i}
                         onClick={() => item.page && setCurrentPage(item.page)}
-                        className={`${item.color} ${item.text} p-8 rounded-2xl shadow-xl border border-slate-100 flex flex-col items-start transition-all hover:-translate-y-1 hover:shadow-2xl group`}
+                        className={`${item.color} ${item.text} p-6 md:p-8 rounded-2xl shadow-xl border border-slate-100 flex flex-col items-start transition-all hover:-translate-y-1 hover:shadow-2xl group text-left`}
                       >
-                        <div className={`w-12 h-12 ${item.color === 'bg-white' ? 'bg-blue-50 text-blue-700' : 'bg-white/10 text-amber-400'} rounded-xl flex items-center justify-center mb-6`}>
+                        <div className={`w-12 h-12 ${item.color === 'bg-white' ? 'bg-amber-50 text-amber-700' : 'bg-white/10 text-amber-400'} rounded-xl flex items-center justify-center mb-6`}>
                           <i className={`fa-solid ${item.icon} text-xl`}></i>
                         </div>
-                        <span className="font-bold text-lg">{item.title}</span>
+                        <span className="font-bold text-base md:text-lg leading-tight">{item.title}</span>
                       </button>
                     ))}
                 </div>
             </section>
 
-            <Services />
+            <Services onNavigate={setCurrentPage} />
             <TourismHeritage />
             <TownMap />
-
-            {/* Professional News Feed */}
-            <section className="py-24 bg-white border-t border-slate-100">
-                <div className="max-w-7xl mx-auto px-4">
-                    <header className="flex justify-between items-end mb-16">
-                        <div>
-                            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Latest News & Updates</h2>
-                            <p className="text-slate-500 mt-2">Official announcements from the Council.</p>
-                        </div>
-                        <button onClick={() => setCurrentPage('notices')} className="text-blue-700 font-bold hover:underline">
-                          View All Notices
-                        </button>
-                    </header>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {[1, 2, 3].map((idx) => (
-                          <article key={idx} className="bg-white rounded-2xl border border-slate-100 overflow-hidden hover:shadow-lg transition-shadow">
-                              <div className="aspect-video bg-slate-100 overflow-hidden">
-                                <img src={`https://picsum.photos/seed/news${idx}/800/450`} alt="News" className="w-full h-full object-cover" />
-                              </div>
-                              <div className="p-6">
-                                  <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">October 2024</span>
-                                  <h3 className="font-bold text-lg text-slate-900 mt-3 mb-4 leading-tight">Council Approves New Infrastructure Development Plan</h3>
-                                  <p className="text-slate-500 text-sm leading-relaxed mb-6">Detailed briefing on the upcoming residential expansion and water management upgrades...</p>
-                                  <button className="text-blue-700 font-bold text-sm hover:underline">Read Article</button>
-                              </div>
-                          </article>
-                        ))}
-                    </div>
-                </div>
-            </section>
           </main>
         );
       case 'services':
-        return <Services />;
+        return <Services onNavigate={setCurrentPage} />;
       case 'tourism':
         return <TourismHeritage />;
       case 'documents':
         return <DocumentRepository />;
+      case 'tenders':
+        return <Tenders />;
+      case 'water-utilities':
+        return <WaterUtilities />;
+      case 'land-property':
+        return <PropertyPortal />;
+      case 'notices':
+        return <Bulletin />;
       case 'council':
         return (
           <main className="py-24 bg-slate-50 min-h-screen">
@@ -161,14 +163,18 @@ const App: React.FC = () => {
                 <h2 className="text-xl font-bold text-slate-900 mb-10 border-b border-slate-200 pb-4">Administrative Departments</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {[
-                      { name: 'Maria Shikongo', dept: 'Planning & Properties', icon: 'fa-map-location-dot' },
-                      { name: 'Tjiuira Tjombumbi', dept: 'Technical Services', icon: 'fa-gears' },
-                      { name: 'Nghidipo Amukoto', dept: 'Public Health', icon: 'fa-leaf' },
-                      { name: 'David Tjiueza', dept: 'HR & Administration', icon: 'fa-users-gear' },
-                      { name: 'Selma Kamberipa', dept: 'Finance & IT', icon: 'fa-file-invoice-dollar' }
+                      { name: 'Maria Shikongo', dept: 'Planning & Properties', icon: 'fa-map-location-dot', id: 'dept-planning' },
+                      { name: 'Tjiuira Tjombumbi', dept: 'Technical Services', icon: 'fa-gears', id: 'dept-technical' },
+                      { name: 'Nghidipo Amukoto', dept: 'Public Health', icon: 'fa-leaf', id: 'dept-health' },
+                      { name: 'David Tjiueza', dept: 'HR & Administration', icon: 'fa-users-gear', id: 'dept-hr' },
+                      { name: 'Selma Kamberipa', dept: 'Finance & IT', icon: 'fa-file-invoice-dollar', id: 'dept-finance' }
                     ].map((member, i) => (
-                      <article key={i} className="bg-white rounded-2xl p-8 border border-slate-100 flex items-center space-x-6 hover:shadow-md transition-shadow">
-                          <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl flex-shrink-0">
+                      <article 
+                        key={i} 
+                        onClick={() => setCurrentPage(member.id)}
+                        className="bg-white rounded-2xl p-8 border border-slate-100 flex items-center space-x-6 hover:shadow-md transition-all cursor-pointer group"
+                      >
+                          <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                             <i className={`fa-solid ${member.icon}`}></i>
                           </div>
                           <div>
@@ -230,7 +236,7 @@ const App: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-slate-50">
       <Navbar onNavigate={setCurrentPage} currentPage={currentPage} />
       
-      <div className="flex-grow">
+      <div className="flex-grow pt-20 lg:pt-24">
         {renderPage()}
       </div>
 
@@ -242,7 +248,7 @@ const App: React.FC = () => {
             <div className="md:col-span-2">
               <div className="flex items-center text-white mb-6">
                 <img src="https://upload.wikimedia.org/wikipedia/en/2/2a/Opuwo_Town_Council_Logo.png" className="h-10 w-auto mr-4 bg-white p-1 rounded" alt="Logo" />
-                <span className="font-bold text-xl uppercase tracking-tight">Opuwo Town Council</span>
+                <span className="font-bold text-xl uppercase tracking-tight text-white">Opuwo Town Council</span>
               </div>
               <p className="max-w-sm leading-relaxed text-sm">
                 Dedicated to providing quality municipal services and promoting sustainable development in the heart of the Kunene Region.
@@ -254,6 +260,9 @@ const App: React.FC = () => {
                 <li><button onClick={() => setCurrentPage('services')} className="hover:text-amber-500">Services</button></li>
                 <li><button onClick={() => setCurrentPage('council')} className="hover:text-amber-500">The Council</button></li>
                 <li><button onClick={() => setCurrentPage('tourism')} className="hover:text-amber-500">Visit Opuwo</button></li>
+                <li><button onClick={() => setCurrentPage('water-utilities')} className="hover:text-amber-500">Water Portal</button></li>
+                <li><button onClick={() => setCurrentPage('land-property')} className="hover:text-amber-500">Property Portal</button></li>
+                <li><button onClick={() => setCurrentPage('tenders')} className="hover:text-amber-500">Public Tenders</button></li>
               </ul>
             </div>
             <div>
