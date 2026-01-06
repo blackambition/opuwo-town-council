@@ -8,7 +8,7 @@ const newsItems = [
     category: 'Infrastructure',
     title: 'Council Approves New Infrastructure Development Plan',
     excerpt: 'Detailed briefing on the upcoming residential expansion and water management upgrades aimed at improving service delivery in Opuwo Extension 4.',
-    image: 'https://images.unsplash.com/photo-1590060153074-303de308e824?auto=format&fit=crop&q=80&w=800'
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 2,

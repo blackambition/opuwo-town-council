@@ -108,7 +108,7 @@ const App: React.FC = () => {
             </section>
 
             <Services onNavigate={setCurrentPage} />
-            <TourismHeritage />
+            <TourismHeritage onNavigate={setCurrentPage} />
             <TownMap />
           </main>
         );
@@ -121,7 +121,7 @@ const App: React.FC = () => {
       case 'services':
         return <Services onNavigate={setCurrentPage} />;
       case 'tourism':
-        return <TourismHeritage />;
+        return <TourismHeritage onNavigate={setCurrentPage} />;
       case 'documents':
         return <DocumentRepository />;
       case 'tenders':
@@ -175,7 +175,7 @@ const App: React.FC = () => {
                 </div>
               </section>
 
-              {/* Departments Grid */}
+              {/* Administrative Departments Grid */}
               <section className="mb-24">
                 <h2 className="text-xl font-bold text-slate-900 mb-10 border-b border-slate-200 pb-4">Administrative Departments</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
